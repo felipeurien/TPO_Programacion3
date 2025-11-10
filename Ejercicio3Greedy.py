@@ -3,22 +3,24 @@
 # Enunciado: Un estudiante tiene n actividades, cada una con un horario de inicio y fin.
 # El objetivo es seleccionar la máxima cantidad de actividades que no se superpongan.
 
-def seleccionar_conferencias(conferencias):
-    # Ordenar conferencias por hora de fin
+def seleccionarConferencias(conferencias):
+    # Tenemos que ordenar las conferencias por hora de fin
     conferencias.sort(key=lambda c: c[1])
-    conferencias_seleccionadas = []
+    conferenciasSeleccionadas = []
     hora_fin_ultima = 0
 
+    # Iterar sobre las conferencias ordenadas
     for conf in conferencias:
+        # Si la conferencia actual empieza después o cuando termina la última seleccionada. Agregarla a la lista.
         if conf[0] >= hora_fin_ultima:
-            conferencias_seleccionadas.append(conf)
+            conferenciasSeleccionadas.append(conf)
             hora_fin_ultima = conf[1]
 
-    return conferencias_seleccionadas
+    return conferenciasSeleccionadas
 
 # --- EJEMPLO DE USO ---
 conferencias = [(1, 3), (2, 5), (4, 6), (7, 8)]
-resultado = seleccionar_conferencias(conferencias)
+resultado = seleccionarConferencias(conferencias)
 print("Conferencias seleccionadas:", resultado)
 
 # --- COMPLEJIDAD TEMPORAL ---
