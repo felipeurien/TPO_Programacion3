@@ -11,19 +11,6 @@ encontrar el par de puntos que estén a la menor distancia posible entre sí.
 • Comparación de complejidad con la solución O(n²).
 • Implementación en código real con al menos 5 ejemplos de prueba. """
 
-""" puntos = [(1, 3), (4, 5), (13, 6), (7, 8), (2, 4), (10, 2), (5, 1)]
-
-def divideAndConquer(lista):
-
-
-
-
-
-    return    
-
-divideAndConquer(puntos)
- """
-
 def distancia(p1, p2):
     dx = p1[0] - p2[0]
     dy = p1[1] - p2[1]
