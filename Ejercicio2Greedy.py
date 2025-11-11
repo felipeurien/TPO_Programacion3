@@ -18,12 +18,24 @@ def seleccionarConferencias(conferencias):
 
     return conferenciasSeleccionadas
 
-# --- EJEMPLO DE USO ---
+# --- EJEMPLOS DE USO ---
+
+# Ejemplo 1
 conferencias = [(1, 3), (2, 5), (4, 6), (7, 8)]
 resultado = seleccionarConferencias(conferencias)
 print("Conferencias seleccionadas:", resultado)
 
+# Ejemplo 2
+conferencias = [(1, 2), (2, 3), (3, 4), (1, 5)]
+resultado = seleccionarConferencias(conferencias)
+print("Conferencias seleccionadas:", resultado)
+
+# Ejemplo 3
+conferencias = [(1, 3), (2, 3), (3, 4)]
+resultado = seleccionarConferencias(conferencias)
+print("Conferencias seleccionadas:", resultado)
+
 # --- COMPLEJIDAD TEMPORAL ---
-# Mejor caso: O(n log n).
+# Mejor caso: O(n).
 # Peor caso: O(n log n).
 # Caso promedio: O(n log n).
