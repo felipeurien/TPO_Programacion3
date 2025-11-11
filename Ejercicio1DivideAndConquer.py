@@ -1,16 +1,3 @@
-""" Problemas a Resolver
- Parte 1 – Divide & Conquer
-Problema: Par de puntos más cercanos
-En un plano bidimensional se tienen n puntos con coordenadas (x, y). El objetivo es
-encontrar el par de puntos que estén a la menor distancia posible entre sí.
-1. Solución ingenua (O(n²))
-2. Solución con Divide & Conquer
- Se espera:
-• Pseudocódigo del algoritmo.
-• Explicación paso a paso.
-• Comparación de complejidad con la solución O(n²).
-• Implementación en código real con al menos 5 ejemplos de prueba. """
-
 def distancia(p1, p2):
     dx = p1[0] - p2[0]
     dy = p1[1] - p2[1]
@@ -90,9 +77,34 @@ def _recursivo(puntos):
     return mejor_par, d
 
 
-puntos = [(1, 3), (4, 5), (13, 6), (7, 8), (2, 4), (10, 2), (5, 1)]
-mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos)
 
-print("Par más cercano:", mejor_par)
+
+puntos1 = [(1,3),(2,4),(7,8),(10,2)]
+mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos1)
+
+print("Par más cercano ejemplo 1:", mejor_par)
 print("Distancia al cuadrado mínima:", distancia_minima_cuadrada)
 
+puntos2 = [(0,0),(5,0),(3,4),(0,2)]
+mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos2)
+
+print("Par más cercano ejemplo 2:", mejor_par)
+print("Distancia al cuadrado mínima:", distancia_minima_cuadrada)
+
+puntos3 = [(1,1),(2,2),(3,3),(2,1)]
+mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos3)
+
+print("Par más cercano ejemplo 3:", mejor_par)
+print("Distancia al cuadrado mínima:", distancia_minima_cuadrada)
+
+puntos4 = [(0,0),(1,0),(2,0),(10,10)]
+mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos4)
+
+print("Par más cercano ejemplo 4:", mejor_par)
+print("Distancia al cuadrado mínima:", distancia_minima_cuadrada)
+
+puntos5 = [(-1,-1),(-2,-3),(4,5),(-1,0),(2,2)]
+mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos5)
+
+print("Par más cercano ejemplo 5:", mejor_par)
+print("Distancia al cuadrado mínima:", distancia_minima_cuadrada)
