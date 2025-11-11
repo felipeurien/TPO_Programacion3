@@ -3,7 +3,6 @@ def knapsack_01(valor, peso, capacidad):
     dp = [0] * (capacidad + 1)
     for i in range(n):
         wi, vi = peso[i], valor[i]
-        # recorrer capacidades DE MAYOR A MENOR
         for c in range(capacidad, wi - 1, -1):
             dp[c] = max(dp[c], vi + dp[c - wi])
     return dp[capacidad]
