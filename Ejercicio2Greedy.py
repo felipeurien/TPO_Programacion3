@@ -1,4 +1,4 @@
-# Ejercicio 3 - Algoritmo Greedy
+# Ejercicio 2 - Algoritmo Greedy
 
 # Enunciado: Un estudiante tiene n actividades, cada una con un horario de inicio y fin.
 # El objetivo es seleccionar la máxima cantidad de actividades que no se superpongan.

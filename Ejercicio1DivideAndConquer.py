@@ -1,12 +1,19 @@
+# Ejercicio 1 - Algoritmo Divide y Conquista
+
+# En un plano bidimensional se tienen n puntos con coordenadas (x, y).
+# El objetivo es encontrar el par de puntos que estén a la menor distancia posible entre sí.
+# Solución ingenua (O(n²))
+# Solución con Divide & Conquer
+
 def distancia(p1, p2):
     dx = p1[0] - p2[0]
     dy = p1[1] - p2[1]
     return dx*dx + dy*dy
 
-#  O(n^2) 
+#  Seria la solución ingenua con complejidad O(n²)
 def distancia_minima_bruta(puntos):
     n = len(puntos)
-    min_d = 10**9   
+    min_d = 10**9
     par = (None, None)
 
     for i in range(n):
@@ -19,39 +26,57 @@ def distancia_minima_bruta(puntos):
     return par, min_d
 
 def ordenar_por_x(puntos):
-    n = len(puntos)
-    for i in range(1, n):
-        j = i
-        while j > 0 and puntos[j-1][0] > puntos[j][0]:
-            puntos[j-1], puntos[j] = puntos[j], puntos[j-1]
-            j -= 1
-    return puntos
+    # Ordena puntos por coordenada x (y luego por y para estabilidad).
+    return sorted(puntos, key=lambda p: (p[0], p[1]))
 
 def ordenar_por_y(puntos):
-    n = len(puntos)
-    for i in range(1, n):
-        j = i
-        while j > 0 and puntos[j-1][1] > puntos[j][1]:
-            puntos[j-1], puntos[j] = puntos[j], puntos[j-1]
-            j -= 1
-    return puntos
+    # Ordena puntos por coordenada y (y luego por x para estabilidad).
+    return sorted(puntos, key=lambda p: (p[1], p[0]))
 
 def par_mas_cercano(puntos):
-    puntos = ordenar_por_x(puntos)
-    return _recursivo(puntos)
+    # Encuentra el par de puntos más cercano usando Divide & Conquer.
+    # Complejidad: O(n log n)
+    
+    # Pre-ordena por X e Y una sola vez, luego pasa ambas listas recursivamente.
+    if len(puntos) < 2:
+        return (None, None), float('inf')
+    
+    # Pre-ordenar una sola vez: O(n log n)
+    Px = ordenar_por_x(puntos)
+    Py = ordenar_por_y(puntos)
+    
+    return _recursivo(Px, Py)
 
-def _recursivo(puntos):
-    n = len(puntos)
+def _recursivo(Px, Py):
+    # Función recursiva que recibe puntos ordenados por X (Px) y por Y (Py).
+    # Esto evita re-ordenar en cada nivel recursivo.
+    n = len(Px)
+    
+    # Caso base: usar fuerza bruta para n pequeño
     if n <= 3:
-        return distancia_minima_bruta(puntos)
+        return distancia_minima_bruta(Px)
 
+    # Dividir por la mediana en X
     mid = n // 2
-    mitad_izq = puntos[:mid]
-    mitad_der = puntos[mid:]
+    Qx = Px[:mid]  # Mitad izquierda ordenada por X
+    Rx = Px[mid:]  # Mitad derecha ordenada por X
+    mid_x = Px[mid][0]
 
-    (p1, q1), d1 = _recursivo(mitad_izq)
-    (p2, q2), d2 = _recursivo(mitad_der)
+    # Dividir Py en Qy y Ry manteniendo el orden por Y - O(n) lineal
+    Qx_set = set(Qx)  # Para verificación rápida O(1)
+    Qy = []
+    Ry = []
+    for p in Py:
+        if p in Qx_set:
+            Qy.append(p)
+        else:
+            Ry.append(p)
 
+    # Resolver recursivamente
+    (p1, q1), d1 = _recursivo(Qx, Qy)
+    (p2, q2), d2 = _recursivo(Rx, Ry)
+
+    # Tomar el mejor de ambos lados
     if d1 < d2:
         d = d1
         mejor_par = (p1, q1)
@@ -59,16 +84,16 @@ def _recursivo(puntos):
         d = d2
         mejor_par = (p2, q2)
 
-    x_med = puntos[mid][0]
-    strip = []
-    for p in puntos:
-        if abs(p[0] - x_med) < d:
-            strip.append(p)
+    # Construir franja: puntos cuya coordenada X está cerca de mid_x
+    # Comparamos (x - mid_x)² < d (distancia al cuadrado)
+    import math
+    delta = math.sqrt(d)  # Convertir a distancia lineal para comparar con coordenada
+    strip = [p for p in Py if abs(p[0] - mid_x) < delta]
 
-    strip = ordenar_por_y(strip)
-
+    # La franja YA está ordenada por Y (viene de Py)
+    # Solo necesitamos comparar cada punto con los siguientes 7
     for i in range(len(strip)):
-        for j in range(i + 1, min(i + 7, len(strip))):
+        for j in range(i + 1, min(i + 8, len(strip))):
             d3 = distancia(strip[i], strip[j])
             if d3 < d:
                 d = d3
@@ -77,8 +102,17 @@ def _recursivo(puntos):
     return mejor_par, d
 
 
+# --- Complejidad Temporal ---
+    # Divide y Conquista:
+        # Peor caso: O(n log n)
+        # Mejor caso: O(n log n)
+        # Caso promedio: O(n log n)
+    # Ingenuo:
+        # Peor caso: O(n²)
+        # Mejor caso: O(n²)
+        # Caso promedio: O(n²)
 
-
+# --- Ejemplos de Uso ---
 puntos1 = [(1,3),(2,4),(7,8),(10,2)]
 mejor_par, distancia_minima_cuadrada = par_mas_cercano(puntos1)
 
